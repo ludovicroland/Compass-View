@@ -101,7 +101,7 @@ public class CompassView
       rotation += CompassView.DEGREES_360;
     }
 
-    rotateImageView(rotation);
+    rotateImageView(rotation % CompassView.DEGREES_360);
   }
 
   @SuppressWarnings("ConstantConditions")
@@ -119,8 +119,6 @@ public class CompassView
     }
     else
     {
-      currentRotate = currentRotate % CompassView.DEGREES_360;
-
       final RotateAnimation rotateAnimation = new RotateAnimation(lastRotation, currentRotate, Animation.RELATIVE_TO_SELF, CompassView.CENTER, Animation.RELATIVE_TO_SELF, CompassView.CENTER);
       rotateAnimation.setInterpolator(new LinearInterpolator());
       rotateAnimation.setDuration(CompassView.FAST_ANIMATION_DURATION);
