@@ -8,14 +8,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.hardware.GeomagneticField;
 import android.location.Location;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
-import garin.artemiy.compassview.library.BuildConfig;
 import garin.artemiy.compassview.library.CompassSensorManager;
 
 /**
@@ -26,8 +24,6 @@ public class CompassView
     extends ImageView
     implements Animation.AnimationListener
 {
-
-  private static final String TAG = CompassView.class.getSimpleName();
 
   private static final int FAST_ANIMATION_DURATION = 200;
 
@@ -105,40 +101,35 @@ public class CompassView
       rotation = rotation + DEGREES_360;
     }
 
-    rotateImageView(this, drawableResource, rotation);
-
-    if (BuildConfig.DEBUG)
-    {
-      Log.d(CompassView.TAG, String.valueOf(rotation));
-    }
+    rotateImageView(rotation);
   }
 
   @SuppressWarnings("ConstantConditions")
-  private void rotateImageView(ImageView compassView, int drawable, float currentRotate)
+  private void rotateImageView(float currentRotate)
   {
     if (directionBitmap == null)
     {
-      directionBitmap = BitmapFactory.decodeResource(getResources(), drawable);
+      directionBitmap = BitmapFactory.decodeResource(getResources(), drawableResource);
+
       final Animation fadeInAnimation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
       fadeInAnimation.setAnimationListener(this);
-      compassView.startAnimation(fadeInAnimation);
-      compassView.setImageDrawable(new BitmapDrawable(getResources(), directionBitmap));
-      compassView.setScaleType(ScaleType.CENTER);
+      startAnimation(fadeInAnimation);
+      setImageDrawable(new BitmapDrawable(getResources(), directionBitmap));
+      setScaleType(ScaleType.CENTER);
     }
     else
     {
       currentRotate = currentRotate % DEGREES_360;
-      int animationDuration = FAST_ANIMATION_DURATION;
 
-      final RotateAnimation rotateAnimation = new RotateAnimation(lastRotation, currentRotate, Animation.RELATIVE_TO_SELF, CENTER, Animation.RELATIVE_TO_SELF, CENTER);
+      final RotateAnimation rotateAnimation = new RotateAnimation(lastRotation, currentRotate, Animation.RELATIVE_TO_SELF, CompassView.CENTER, Animation.RELATIVE_TO_SELF, CompassView.CENTER);
       rotateAnimation.setInterpolator(new LinearInterpolator());
-      rotateAnimation.setDuration(animationDuration);
+      rotateAnimation.setDuration(CompassView.FAST_ANIMATION_DURATION);
       rotateAnimation.setFillAfter(true);
       rotateAnimation.setAnimationListener(this);
 
       lastRotation = currentRotate;
 
-      compassView.startAnimation(rotateAnimation);
+      startAnimation(rotateAnimation);
     }
   }
 
