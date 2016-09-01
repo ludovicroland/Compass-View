@@ -92,13 +92,13 @@ public class CompassView
     float bearTo = userLocation.bearingTo(objectLocation);
     if (bearTo < 0)
     {
-      bearTo = bearTo + DEGREES_360;
+      bearTo += CompassView.DEGREES_360;
     }
 
     float rotation = bearTo - azimuth;
     if (rotation < 0)
     {
-      rotation = rotation + DEGREES_360;
+      rotation += CompassView.DEGREES_360;
     }
 
     rotateImageView(rotation);
