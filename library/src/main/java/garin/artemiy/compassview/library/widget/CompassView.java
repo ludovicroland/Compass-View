@@ -119,7 +119,7 @@ public class CompassView
     }
     else
     {
-      currentRotate = currentRotate % DEGREES_360;
+      currentRotate = currentRotate % CompassView.DEGREES_360;
 
       final RotateAnimation rotateAnimation = new RotateAnimation(lastRotation, currentRotate, Animation.RELATIVE_TO_SELF, CompassView.CENTER, Animation.RELATIVE_TO_SELF, CompassView.CENTER);
       rotateAnimation.setInterpolator(new LinearInterpolator());
