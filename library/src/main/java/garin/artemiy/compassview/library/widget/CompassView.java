@@ -14,7 +14,6 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
-
 import garin.artemiy.compassview.library.CompassSensorManager;
 
 /**
@@ -122,11 +121,15 @@ public class CompassView
     {
       final float savedCurrentRotate = currentRotate;
 
-      if(Math.abs(currentRotate - lastRotation) > 180){
-        if(currentRotate < lastRotation){
-          currentRotate += DEGREES_360;
-        } else {
-          currentRotate -= DEGREES_360;
+      if (Math.abs(currentRotate - lastRotation) > 180)
+      {
+        if (currentRotate < lastRotation)
+        {
+          currentRotate += CompassView.DEGREES_360;
+        }
+        else
+        {
+          currentRotate -= CompassView.DEGREES_360;
         }
       }
 
